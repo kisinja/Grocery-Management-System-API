@@ -1,22 +1,28 @@
-const express = require("express");
-const router = express.Router();
 const Cart = require("../models/cart");
 
 const getCarts = async (req, res) => {
-    try {
-        const cart = await Cart.find();
-        res.status(200).json(cart);
-    } catch (error) {
-        res.status(500).json(error);
-        console.error(error.message);
+    if (req.user.role === "admin") {
+        try {
+            const carts = await Cart.find();
+            res.status(200).send(carts);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    } else {
+        const cart = await Cart.findOne({ user: req.user.id });
+        if (cart) {
+            res.send(cart).status(200);
+        } else {
+            res.status(404).send("Your cart is empty :(");
+        }
     }
 }
-
 
 const getUserCart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.params.userId });
-        res.status(200).send(cart);
+        if (cart) return res.status(200).send(cart);
+        else return res.status(404).send("Cart not found");
     } catch (error) {
         res.status(500).send(error);
         console.error(error.message);
