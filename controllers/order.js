@@ -1,5 +1,6 @@
 const Order = require("../models/order");
 
+// Get all orders
 const getOrders = async (req, res) => {
     if (req.user.role == "admin") {
         try {
@@ -22,6 +23,7 @@ const getOrders = async (req, res) => {
     }
 }
 
+// Create an order
 const createOrder = async (req, res) => {
     const newOrder = new Order(req.body);
     try {
@@ -33,6 +35,7 @@ const createOrder = async (req, res) => {
     }
 }
 
+// Update an order
 const updateOrder = async (req, res) => {
     try {
         const updatedOrder = await Order.findByIdAndUpdate(req.params.id, {
@@ -45,6 +48,7 @@ const updateOrder = async (req, res) => {
     }
 }
 
+// Delete an order
 const deleteOrder = async (req, res) => {
     try {
         const deletedOrder = await Order.findByIdAndDelete(req.params.id);
@@ -59,6 +63,7 @@ const deleteOrder = async (req, res) => {
     }
 }
 
+// Export the functions
 module.exports = {
     getOrders,
     createOrder,
