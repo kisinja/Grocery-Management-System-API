@@ -2,6 +2,17 @@ const express = require("express");
 const router = express.Router();
 const Cart = require("../models/cart");
 
+const getCarts = async (req, res) => {
+    try {
+        const cart = await Cart.find();
+        res.status(200).json(cart);
+    } catch (error) {
+        res.status(500).json(error);
+        console.error(error.message);
+    }
+}
+
+
 const getUserCart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.params.userId });
@@ -34,7 +45,7 @@ const updateCart = async (req, res) => {
     }
 }
 
-const addCart = async (req, res) {
+const addCart = async (req, res) => {
     const newCart = new Cart(req.body);
     try {
         const savedCart = await newCart.save();
@@ -49,5 +60,6 @@ module.exports = {
     getUserCart,
     deleteCart,
     updateCart,
-    addCart
+    addCart,
+    getCarts
 }
