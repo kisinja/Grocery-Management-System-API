@@ -29,7 +29,7 @@ app.use('/orders', verifyToken, orderRouter);
 
 // API TESTING
 app.get("/", (req, res) => {
-    res.send("API inafanya kazi sasa enda uimalizie kazi yako").status(200);
+    res.send("API Test Successful :)").status(200);
 });
 
 // SERVER START
