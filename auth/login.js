@@ -12,9 +12,9 @@ const login = async (req, res) => {
         const passwordMatch = bcrypt.compare(password, user.password);
         if (!passwordMatch) return res.status(401).send({ message: "Invalid credentials" });
 
-        const token = jwt.sign({ user: { id: user._id } }, "elvis", { expiresIn: "1h" });
+        const token = jwt.sign({ user: { id: user.id, role:user.role } }, "elvis", { expiresIn: "1h" });
 
-        return res.send({ token }).status(201);
+        return res.send({ "message":`Hi, ${user.name}. Logged in successfully. Use the token below to send requests :)`, "token":token}).status(201);
     } catch (error) {
         console.log(error.message);
         return res.status(500).send({ message: error.message });
