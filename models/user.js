@@ -26,7 +26,10 @@ const userSchema = new mongoose.Schema(
             type: Array,
             required: true,
         },
-        phone_number,
+        phone_number: {
+            type: Number,
+            required: true,
+        },
         orders: [
             {
                 type: mongoose.Schema.Types.ObjectId,
